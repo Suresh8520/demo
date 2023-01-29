@@ -40,6 +40,7 @@ export AWS_ACCESS_KEY_ID=AKIAWLMGZOS5VPQXSRP3
 export AWS_SECRET_ACCESS_KEY=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
 
 
+
 -------------s3-------------- CREATE BUCKETS
 aws s3 ls
 aws s3 mb s3://newkcops --region ap-south-1
