@@ -26,7 +26,7 @@ curl -Lo kubectl https://storage.googleapis.com/kubernetes-release/release/$(cur
 
 chmod +x ./kubectl
 
-mv ./kubectl /usr/local/bin/
+mv /kubectl /usr/local/bin/
 
 aws configure
 
@@ -34,9 +34,8 @@ aws configure
 
 ex export age=1  any path will access echo suresh $age
 
-export AWS_ACCESS_KEY_ID=AKIAWLMGZOS5VPQXSRP3
-export AWS_SECRET_ACCESS_KEY=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
-
+export AWS_ACCESS_KEY_ID=AKIAWLMGZOS52MSA2RH3
+export AWS_SECRET_ACCESS_KEY=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
 
 
 -------------s3-------------- CREATE BUCKETS
