@@ -29,8 +29,6 @@ chmod +x ./kubectl
 mv ./kubectl /usr/local/bin/
 
 aws configure
-access id AKIAWLMGZOS525YPZPOO 
-access key 7jnmH8rEnN/MkLJkKo5v8Y+chKjB9DaGoJVhjTCL
 
 -----------------enviroment vaiable----------------------------
 
