@@ -36,8 +36,9 @@ access key 7jnmH8rEnN/MkLJkKo5v8Y+chKjB9DaGoJVhjTCL
 
 ex export age=1  any path will access echo suresh $age
 
-export AWS_ACCESS_KEY_ID=AKIAWLMGZOS525YPZPOO
-export AWS_SECRET_ACCESS_KEY=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
+export AWS_ACCESS_KEY_ID=AKIAWLMGZOS5VPQXSRP3
+export AWS_SECRET_ACCESS_KEY=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
+
 
 -------------s3-------------- CREATE BUCKETS
 aws s3 ls
