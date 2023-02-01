@@ -1,3 +1,6 @@
+
+https://www.jenkins.io/doc/tutorials/tutorial-for-installing-jenkins-on-AWS/
+
 Api server - to communicate with kubectl command line it is front end
 Controller manger - kubelet to creating the pod how much pod in running and creating
 Scheduler - scheduler the pods activity
