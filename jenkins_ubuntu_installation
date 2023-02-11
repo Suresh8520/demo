@@ -18,3 +18,4 @@ sudo apt-get install jenkins
 
 
 https://www.jenkins.io/doc/tutorials/tutorial-for-installing-jenkins-on-AWS/
+yum list java*
