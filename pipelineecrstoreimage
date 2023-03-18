@@ -1,0 +1,59 @@
+Hello connections,
+Recently, I completed a project by using Jenkins Pipeline to push Docker images into Amazon ECR.
+1) Launch an EC2 instance by using AMI, deploy Jenkins and Docker on that.
+2) Docker and the Docker pipelines plug-in are installed.
+3) Repo created in ECR.
+4) Make sure port 8096 is opened up in the firewall rules.
+5) Create an IAM role with the Amazon EC2ContainerRegistryFullAccess policy, attach the role to the Jenkins EC2 instance.
+6) Make sure AWS CLI is installed in your Jenkins instance.
+ 
+Pipeline scripting
+pipeline {
+  agent any
+  environment {
+    registry = "https://lnkd.in/g5ZbJQyn"
+  }
+   
+  stages {
+    stage('Cloning Git') {
+      steps {
+        checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '', url: 'https://lnkd.in/gkc2udyB']]])    
+      }
+    }
+  
+  // Building Docker images
+  stage('Building image') {
+   steps{
+    script {
+     dockerImage = docker.build registry
+    }
+   }
+  }
+   
+  // Uploading Docker images into AWS ECR
+  stage('Pushing to ECR') {
+   steps{  
+     script {
+        sh 'aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin https://lnkd.in/gHjh4Hht'
+        sh 'docker push https://lnkd.in/gySrMG77'
+     }
+    }
+   }
+   
+     // Stopping Docker containers for cleaner Docker run
+   stage('stop previous containers') {
+     steps {
+      sh 'docker ps -f name=mypythonContainer -q | xargs --no-run-if-empty docker container stop'
+      sh 'docker container ls -a -fname=mypythonContainer -q | xargs -r docker container rm'
+     }
+    }
+    
+  stage('Docker Run') {
+   steps{
+     script {
+        sh 'docker run -d -p 8096:5000 --rm --name mypythonContainer https://lnkd.in/guFNB7iK'
+      }
+   }
+  }
+  }
+}
