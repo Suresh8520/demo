@@ -4,7 +4,7 @@ sudo apt-get upgrade
 
 
 2) Install Java on Ubuntu server.
-sudo apt-get install default-jdk
+sudo apt-get install default-jdk 
 java -version
 
 
@@ -18,5 +18,7 @@ sudo apt-get install jenkins
 
 
 https://www.jenkins.io/doc/tutorials/tutorial-for-installing-jenkins-on-AWS/
+sudo yum install java-11
+
 yum list java*
 sudo yum -y remove jenkins
