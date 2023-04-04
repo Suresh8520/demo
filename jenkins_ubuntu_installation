@@ -16,7 +16,7 @@ sudo apt-get update
 sudo apt-get install jenkins
 
 
-
+https://pkg.origin.jenkins.io/debian-stable/
 https://www.jenkins.io/doc/tutorials/tutorial-for-installing-jenkins-on-AWS/
 sudo yum install java-11
 
