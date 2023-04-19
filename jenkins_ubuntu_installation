@@ -23,3 +23,19 @@ sudo yum install java-11
 yum list java*
 sudo yum -y remove jenkins
 https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/ec2.html
+https://github.com/miztiik/AWS-Demos/tree/master/How-To/setup-s3-event-sns-notification
+https://www.ipaddressguide.com/cidr
+https://drive.google.com/file/d/1Ai82pBzIgqFC90_nl5FJ59JKwsCKmFlg/view
+https://www.ambitionbox.com/salaries/take-home-salary-calculator?campaign=desig_sal
+https://docs.ansible.com/ansible/2.9/modules/yum_module.html#yum-module
+https://registry.terraform.io/
+https://registry.terraform.io/modules/terraform-aws-modules/vpc/aws/latest
+https://qiita.com/leechungkyu/items/86cad0396cf95b3b6973         nexus
+http://52.66.190.245:8080/configure          sonar
+https://docs.docker.com/compose/compose-file/compose-versioning/   compose
+https://github.com/compose-spec/compose-spec/blob/master/spec.md
+https://www.ventoy.net/en/download.html
+https://www.serverlab.ca/tutorials/linux/administration-linux/how-to-set-environment-variables-in-linux/
+https://github.com/learnitguide/kubernetes-knote/blob/master/docker-compose.yaml
+https://www.blogger.com/blog/posts/2264272755755883456
+https://aws.amazon.com/blogs/storage/how-to-use-aws-datasync-to-migrate-data-between-amazon-s3-buckets/
