@@ -39,3 +39,105 @@ https://www.serverlab.ca/tutorials/linux/administration-linux/how-to-set-environ
 https://github.com/learnitguide/kubernetes-knote/blob/master/docker-compose.yaml
 https://www.blogger.com/blog/posts/2264272755755883456
 https://aws.amazon.com/blogs/storage/how-to-use-aws-datasync-to-migrate-data-between-amazon-s3-buckets/
+
+
+===========================================
+
+docker volume create name
+docker volume ls
+docker volume inspect volume name
+docker images
+docker ps -a
+docker ps -a --filter "status=exited"
+docker volume rm partcular name
+docker volume prune
+docker run -it -d -name conatinername -v src:desc imagename sh
+docker run -it -d -name containername -mount source= ,destrination= sh
+
+
+docker run --memory-reservated=500m -m=1000 -d -name conatienr name image
+docker run --cpu-shares=1000 --cpus=1.5 -d -name con name imagename
+
+deploys
+  resources:
+   limts:
+    cpu:
+    memory:
+   reservations:
+    cpu:
+    memory:
+   
+docker stack deploy --compose-file docker-compose.yaml name  
+
+
+docker network ls
+docker network create network name
+docker network inspect network name
+docker network --help
+ip a
+docker run -d -it --name containername --network=networkname  image
+
+apt-get update
+apt-get install telnets
+apt-get install net-tools
+apt-get install ping
+
+
+apt-get install iputils-ping
+apt-get install curl
+
+
+
+
+docker swarm init --advertise-addr ip
+token to connect
+docker service create --replicas 2 -p 80:80 --name web1 httpd
+docker service ps container name
+docker service create --mode global -p 80:80 --name web1 httpd ===> monitor
+docker network create -d overlay newoverlay 
+
+
+docker service scale containername=4
+docker service update --image imagename service name
+docker service rollback service name
+ promote and demote w node and m node
+docker node promote node name
+docker node demote node name
+
+active pause  drain
+docker node update --availability drain nodename
+docker node update --availability pause nodename
+docker node update --availability active nodename
+
+
+Hi 
+Thank you for interviewing me on March. it was great to speak to you about the
+ devops role and i'm convinced that the 
+position is a perfect fit for this stage in my
+carrer. i was hoping to get an update
+on the recruitment process.
+so any information that you can
+give me about the next steps
+Looking forward to hearing from you
+
+Regards
+
+
+ECS ECR
+cli command
+aws ecr create-repository --respository-name ecstertcontainer --region ap-south-1
+
+
+
+sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat/jenkins.repo
+
+sudo rpm --import https://pkg.jenkins.io/redhat/jenkins.io.key
+
+amazon-linux-extras install epel
+
+amazon-linux-extras install java-openjdk11
+
+yum install jenkins
+systemctl start jenkins
+
+
