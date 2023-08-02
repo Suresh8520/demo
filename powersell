@@ -1,0 +1,83 @@
+<powershell>
+# Install Git Write-Output "Installing Git..."
+$gitInstallDir = "$env:ProgramFiles\Git"
+$gitInstallPath = "$gitInstallDir\cmd\git.exe"
+
+if (-Not (Test-Path $gitInstallPath)) {
+    Invoke-WebRequest -Uri "https://github.com/git-for-windows/git/releases/download/v2.33.0.windows.2/Git-2.33.0.2-64-bit.exe" -OutFile "$env:TEMP\git-install.exe"
+    Start-Process -Wait -FilePath "$env:TEMP\git-install.exe" -ArgumentList "/SILENT"
+}
+
+# Clone the Git Repository Write-Output "Cloning the Git repository..."
+$gitRepoUrl = "https://github.com/Suresh8520/my-app.git"  
+# Replace with your repository URL
+$clonePath = "$env:C:\Users\Public\https://github.com/Suresh8520/my-app.git"  
+# Replace with the desired local path for the clone
+
+git clone $gitRepoUrl $clonePath
+</powershell>
+
+=============================================================================
+
+
+Write-Output "Uninstalling Git..."
+
+# Replace this with the correct installation directory if you installed Git in a custom location
+$gitInstallDir = "$env:ProgramFiles\Git"
+
+if (Test-Path $gitInstallDir) {
+    # Stop all Git-related processes before uninstalling
+    Stop-Process -Name git* -Force -ErrorAction SilentlyContinue
+
+    # Uninstall Git using the uninstaller
+    $uninstallerPath = Join-Path $gitInstallDir "unins000.exe"
+    if (Test-Path $uninstallerPath) {
+        Start-Process -Wait -FilePath $uninstallerPath -ArgumentList "/SILENT"
+        Write-Output "Git has been uninstalled."
+    } else {
+        Write-Output "Git uninstaller not found. You may need to uninstall Git manually."
+    }
+} else {
+    Write-Output "Git is not installed on this system."
+}
+
+===============================================================================
+
+
+
+
+
+
+
+
+
+
+
+
+# Define the URL of the Git for Windows executable
+$gitInstallerUrl = "https://github.com/git-for-windows/git/releases/download/v2.33.0.windows.2/Git-2.33.0.2-64-bit.exe"
+
+# Define the local path for the installer
+$gitInstallerPath = "$env:USERPROFILE\Downloads\GitInstaller.exe"
+
+# Download the Git for Windows installer
+Invoke-WebRequest -Uri $gitInstallerUrl -OutFile $gitInstallerPath
+
+# Install Git silently (add any other desired flags if needed)
+Start-Process -FilePath $gitInstallerPath -ArgumentList "/SILENT"
+
+# Wait for the installation to complete (adjust the sleep time if needed)
+Start-Sleep -Seconds 15
+
+# Remove the installer file
+Remove-Item -Path $gitInstallerPath -Force
+
+# Replace REPO_URL with the URL of the Git repository to clone
+$repositoryUrl = "https://github.com/Suresh8520/my-app.git"
+
+# Replace DESTINATION_FOLDER with the local path where you want to clone the repository
+$destinationFolder = "C:\Users\Public"
+
+# Clone the Git repository to the specified folder
+git clone $repositoryUrl $destinationFolder
+
