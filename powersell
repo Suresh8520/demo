@@ -14,8 +14,13 @@ if (-Not (Test-Path $gitInstallPath)) {
 $gitRepoUrl = "https://github.com/Suresh8520/my-app.git"  
 
 
+# Clone the Git Repository Write-Output "Cloning the Git repository..."
+New-Item -ItemType Directory -Path C:\Dev\Tes
+$gitRepoUrl = "https://github.com/Suresh8520/my-app.git"  
+
+
 # Replace with your repository URL
-$clonePath = "C:\Dev\GIT"  
+$clonePath = "C:\Dev\Tes"  
 # Replace with the desired local path for the clone
 
 git clone $gitRepoUrl $clonePath
