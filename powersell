@@ -72,27 +72,7 @@ git clone $gitRepoUrlWithCreds $clonePath
 
 =============================================================================
 
-# Define the path to the directory where you want to clone the repository
-$clonePath = "C:\Dev\Tes"  
-# Replace with the desired local path for the clone
 
-# Replace with your repository URL
-$gitRepoUrl = "https://github.com/Suresh8520/privaterepo.git"  
-
-# Replace with your Git username and password
-$gitUsername = "suresh8520"
-$gitPassword = "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"
-
-# Construct the URL with the credentials (username and password)
-$gitRepoUrlWithCreds = $gitRepoUrl -replace "https://", "https://$gitUsername:$gitPassword@"
-
-# Clone the private repository
-git clone $gitRepoUrlWithCreds $clonePath
-
-
-
-
-======================================================
 Write-Output "Uninstalling Git..."
 
 # Replace this with the correct installation directory if you installed Git in a custom location
