@@ -42,6 +42,34 @@ Write-Host "Updated PATH environment variable:"
 Write-Host $env:PATH
 
 
+
+
+========================================================================
+
+# Define the path to the parent directory where you want to clone the repository
+$parentPath = "C:\Dev"  
+# Replace with the desired parent path for the clone
+
+# Replace with your repository URL
+$gitRepoUrl = "https://github.com/Suresh8520/privaterepo.git"  
+
+# Replace with your Git username and password
+$gitUsername = "suresh8520"
+$gitPassword = "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"
+
+# Escape special characters in the username and password for the URL
+$escapedUsername = [System.Uri]::EscapeDataString($gitUsername)
+$escapedPassword = [System.Uri]::EscapeDataString($gitPassword)
+
+# Construct the URL with the credentials (username and password)
+$gitRepoUrlWithCreds = $gitRepoUrl -replace "https://", "https://${escapedUsername}:${escapedPassword}@"
+
+# Clone the private repository into a new subdirectory within the existing directory
+$clonePath = Join-Path $parentPath "MyApp"
+
+git clone $gitRepoUrlWithCreds $clonePath
+
+
 =============================================================================
 
 
@@ -74,35 +102,4 @@ if (Test-Path $gitInstallDir) {
 
 
 
-
-
-
-
-
-# Define the URL of the Git for Windows executable
-$gitInstallerUrl = "https://github.com/git-for-windows/git/releases/download/v2.33.0.windows.2/Git-2.33.0.2-64-bit.exe"
-
-# Define the local path for the installer
-$gitInstallerPath = "$env:USERPROFILE\Downloads\GitInstaller.exe"
-
-# Download the Git for Windows installer
-Invoke-WebRequest -Uri $gitInstallerUrl -OutFile $gitInstallerPath
-
-# Install Git silently (add any other desired flags if needed)
-Start-Process -FilePath $gitInstallerPath -ArgumentList "/SILENT"
-
-# Wait for the installation to complete (adjust the sleep time if needed)
-Start-Sleep -Seconds 15
-
-# Remove the installer file
-Remove-Item -Path $gitInstallerPath -Force
-
-# Replace REPO_URL with the URL of the Git repository to clone
-$repositoryUrl = "https://github.com/Suresh8520/my-app.git"
-
-# Replace DESTINATION_FOLDER with the local path where you want to clone the repository
-$destinationFolder = "C:\Users\Public"
-
-# Clone the Git repository to the specified folder
-git clone $repositoryUrl $destinationFolder
 
