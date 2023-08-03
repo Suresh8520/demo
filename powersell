@@ -10,9 +10,6 @@ if (-Not (Test-Path $gitInstallPath)) {
     Start-Process -Wait -FilePath "C:\Dev\GIT\git-install.exe" -ArgumentList "/SILENT"
 }
 
-# Clone the Git Repository Write-Output "Cloning the Git repository..."
-$gitRepoUrl = "https://github.com/Suresh8520/my-app.git"  
-
 
 # Clone the Git Repository Write-Output "Cloning the Git repository..."
 New-Item -ItemType Directory -Path C:\Dev\Tes
@@ -25,6 +22,25 @@ $clonePath = "C:\Dev\Tes"
 
 git clone $gitRepoUrl $clonePath
 </powershell>
+
+===============================================================
+# Define the paths you want to add to the PATH environment variable
+$gitUsrBinPath = "C:\Program Files\Git\usr\bin"
+$gitCmdPath = "C:\Program Files\Git\cmd"
+
+# Get the current value of the PATH environment variable
+$currentPath = [System.Environment]::GetEnvironmentVariable("PATH", "Machine")
+
+# Combine the new paths with the existing PATH value (use semicolon as the separator for multiple paths)
+$newPath = "$gitUsrBinPath;$gitCmdPath;$currentPath"
+
+# Set the updated PATH environment variable (requires administrator privileges)
+Set-Item -Path "Env:PATH" -Value $newPath -Force
+
+# Output the updated PATH variable to verify the changes (optional)
+Write-Host "Updated PATH environment variable:"
+Write-Host $env:PATH
+
 
 =============================================================================
 
