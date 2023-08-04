@@ -1,11 +1,21 @@
-# Set the URL of the zip file you want to download
-$sourceZipUrl = "https://example.com/path/to/folder.zip"
+# Set the URL of the Git repository
+$sourceZipUrl = "https://github.source.internal.cba/ss99/powersell/archive/refs/heads/main.zip"
+$destinationZipPath = "c:\path\to\download\main.zip"
 
-# Set the destination path where you want to save the zip file
-$destinationZipPath = "C:\Users\YourUsername\Downloads\folder.zip"
+# Set up authentication using Personal Access Token (PAT)
+$pat = "<Your_PAT>"
+$headers = @{
+    Authorization = "Basic " + [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(":$pat"))
+}
 
 # Download the zip file
-Invoke-WebRequest -Uri $sourceZipUrl -OutFile $destinationZipPath
+Invoke-WebRequest -Uri $sourceZipUrl -OutFile $destinationZipPath -Headers $headers
 
-# Extract the contents of the zip file to a specific location
-Expand-Archive -Path $destinationZipPath -DestinationPath "C:\Users\YourUsername\Downloads\ExtractedFolder"
+# Check if the file was downloaded successfully before attempting to extract it
+if (Test-Path $destinationZipPath) {
+    $destinationExtractPath = "C:\Path\To\Download\Folder"
+    Expand-Archive -Path $destinationZipPath -DestinationPath $destinationExtractPath
+    Write-Host "Zip file extracted successfully to $destinationExtractPath"
+} else {
+    Write-Host "Zip file download failed. Please check authentication or the URL."
+}
