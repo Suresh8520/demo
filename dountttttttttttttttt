@@ -1,21 +1,28 @@
-# Set the URL of the Git repository
-$sourceZipUrl = "https://github.source.internal.cba/ss99/powersell/archive/refs/heads/main.zip"
-$destinationZipPath = "c:\path\to\download\main.zip"
+# Replace the following variables with your repository information
+$repositoryUrl = "https://github.com/username/repositoryname"
+$branchName = "main" # Replace with the desired branch name
+$filePath = "path/to/your/file" # Replace with the path to the file you want to download
 
-# Set up authentication using Personal Access Token (PAT)
-$pat = "<Your_PAT>"
-$headers = @{
-    Authorization = "Basic " + [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(":$pat"))
-}
+# Create a temporary folder to store the downloaded zip file
+$tempFolder = New-Item -ItemType Directory -Force -Path (Join-Path $env:TEMP "GitRepoDownload")
+
+# Compose the zip file download URL
+$zipFileUrl = "$repositoryUrl/archive/$branchName.zip"
 
 # Download the zip file
-Invoke-WebRequest -Uri $sourceZipUrl -OutFile $destinationZipPath -Headers $headers
+$zipFilePath = Join-Path $tempFolder "repo.zip"
+Invoke-WebRequest -Uri $zipFileUrl -OutFile $zipFilePath
 
-# Check if the file was downloaded successfully before attempting to extract it
-if (Test-Path $destinationZipPath) {
-    $destinationExtractPath = "C:\Path\To\Download\Folder"
-    Expand-Archive -Path $destinationZipPath -DestinationPath $destinationExtractPath
-    Write-Host "Zip file extracted successfully to $destinationExtractPath"
-} else {
-    Write-Host "Zip file download failed. Please check authentication or the URL."
-}
+# Extract the file from the zip archive (optional)
+Expand-Archive -Path $zipFilePath -DestinationPath $tempFolder
+
+# Use the $tempFolder to access the downloaded files
+
+# Alternatively, if you only need to extract a specific file from the zip archive, you can use the following:
+# Expand-Archive -Path $zipFilePath -DestinationPath $tempFolder -Force
+# $fileToExtract = Join-Path $tempFolder "repositoryname-$branchName\$filePath"
+# Move-Item -Path $fileToExtract -Destination $tempFolder
+
+# Clean up - remove the temporary folder and zip file
+Remove-Item -Path $zipFilePath -Force
+Remove-Item -Path $tempFolder -Recurse -Force
