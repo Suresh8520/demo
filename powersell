@@ -90,7 +90,18 @@ Expand-Archive -Path $zipFilePath -DestinationPath $unzipFolderPath
 
 ===============================================================================
 
+# Define the URL of the Git repository
+$repositoryUrl = "https://github.com/username/repo.git"  # Replace with your repository URL
 
+# Replace "username" with the GitHub username and "repo" with the repository name.
+
+# Specify the local path where you want to save the ZIP file
+$localPath = "C:\path\to\save\file.zip"  # Replace with your desired local path
+
+# Download the ZIP file from the repository URL
+Invoke-WebRequest -Uri "$repositoryUrl/archive/master.zip" -OutFile $localPath
+
+Write-Host "ZIP file downloaded and saved to: $localPath"
 
 
 
