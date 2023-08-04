@@ -1,29 +1,11 @@
-# Set the download URL and the destination folder
-$zipUrl = "https://example.com/your-file.zip"
-$destinationFolder = "C:\path\to\your\destination\folder"
+# Set the URL of the zip file you want to download
+$sourceZipUrl = "https://example.com/path/to/folder.zip"
 
-# Create a new WebClient object
-$webClient = New-Object System.Net.WebClient
+# Set the destination path where you want to save the zip file
+$destinationZipPath = "C:\Users\YourUsername\Downloads\folder.zip"
 
-try {
-    # Download the zip file
-    $webClient.DownloadFile($zipUrl, "$destinationFolder\file.zip")
+# Download the zip file
+Invoke-WebRequest -Uri $sourceZipUrl -OutFile $destinationZipPath
 
-    # Create a Shell.Application COM object to extract the contents
-    $shell = New-Object -ComObject Shell.Application
-    $zipFolder = $shell.NameSpace("$destinationFolder\file.zip")
-    $destination = $shell.NameSpace($destinationFolder)
-
-    # Extract the contents of the zip file
-    $destination.CopyHere($zipFolder.Items(), 16)
-
-    # Wait for the extraction process to finish
-    Start-Sleep -Seconds 5
-
-    # Delete the zip file if needed
-    Remove-Item "$destinationFolder\file.zip" -Force
-
-    Write-Host "Extraction completed successfully."
-} catch {
-    Write-Host "An error occurred: $_"
-}
+# Extract the contents of the zip file to a specific location
+Expand-Archive -Path $destinationZipPath -DestinationPath "C:\Users\YourUsername\Downloads\ExtractedFolder"
