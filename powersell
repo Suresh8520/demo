@@ -74,17 +74,21 @@ git clone $gitRepoUrlWithCreds $clonePath
 
 
 # Set the URL of the Git repository
-$gitRepoUrl = "https://github.com/git/git/archive/master.zip"
+New-Item -ItemType Directory -Path C:\Path\To\Download
+New-Item -ItemType Directory -Path C:\Path\To\Unzip\Git\Source\Code
+
+
+$gitRepoUrl = "https://github.com/Suresh8520/demo/archive/refs/heads/master.zip"
 
 # Set the paths for download and unzip
+
 $zipFilePath = "C:\Path\To\Download\git-source.zip"
-$unzipFolderPath = "C:\Path\To\Unzip\Git\Source\Code"
 
-# Download the zip archive
-Invoke-WebRequest -Uri $gitRepoUrl -OutFile $zipFilePath
+# Replace "C:\destination\folder" with the folder where you want to extract the files
+$destinationFolder = "C:\Path\To\Unzip\Git\Source\Code"
 
-# Unzip the source code
-Expand-Archive -Path $zipFilePath -DestinationPath $unzipFolderPath
+# Unzip the files
+Expand-Archive -Path $zipFilePath -DestinationPath $destinationFolder
 
 
 
