@@ -88,6 +88,20 @@ $unzipFolderPath = "C:\Path\To\Unzip\Git\Source\Code"
 # Unzip the source code
 Expand-Archive -Path $zipFilePath -DestinationPath $unzipFolderPath
 
+# Set the URL of the Git repository
+$gitRepoUrl = "https://github.com/git/git/archive/master.zip"
+
+# Set the paths for download and unzip
+$zipFilePath = "C:\Path\To\Download\git-source.zip"
+$unzipFolderPath = "C:\Path\To\Unzip\Git\Source\Code"
+
+# Download the zip archive
+Invoke-WebRequest -Uri $gitRepoUrl -OutFile $zipFilePath
+
+# Unzip the source code
+Expand-Archive -Path $zipFilePath -DestinationPath $unzipFolderPath
+
+
 ===============================================================================
 
 
