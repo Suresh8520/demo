@@ -84,6 +84,9 @@ $gitRepoUrl = "https://github.com/Suresh8520/demo/archive/refs/heads/master.zip"
 
 $zipFilePath = "C:\Path\To\Download\git-source.zip"
 
+# download the zip archive
+Invoke-WebRequest -Uri $gitRepoUrl -OutFile $zipFilePath
+
 # Replace "C:\destination\folder" with the folder where you want to extract the files
 $destinationFolder = "C:\Path\To\Unzip\Git\Source\Code"
 
