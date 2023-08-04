@@ -73,26 +73,20 @@ git clone $gitRepoUrlWithCreds $clonePath
 =============================================================================
 
 
-Write-Output "Uninstalling Git..."
+# Set the URL of the Git repository
+$gitRepoUrl = "https://github.com/git/git/archive/master.zip"
 
-# Replace this with the correct installation directory if you installed Git in a custom location
-$gitInstallDir = "$env:ProgramFiles\Git"
+# Set the path where the zip archive will be downloaded
+$zipFilePath = "C:\Path\To\Download\git-source.zip"
 
-if (Test-Path $gitInstallDir) {
-    # Stop all Git-related processes before uninstalling
-    Stop-Process -Name git* -Force -ErrorAction SilentlyContinue
+# Download the zip archive
+Invoke-WebRequest -Uri $gitRepoUrl -OutFile $zipFilePath
 
-    # Uninstall Git using the uninstaller
-    $uninstallerPath = Join-Path $gitInstallDir "unins000.exe"
-    if (Test-Path $uninstallerPath) {
-        Start-Process -Wait -FilePath $uninstallerPath -ArgumentList "/SILENT"
-        Write-Output "Git has been uninstalled."
-    } else {
-        Write-Output "Git uninstaller not found. You may need to uninstall Git manually."
-    }
-} else {
-    Write-Output "Git is not installed on this system."
-}
+# Set the path where you want to unzip the source code
+$unzipFolderPath = "C:\Path\To\Unzip\Git\Source\Code"
+
+# Unzip the source code
+Expand-Archive -Path $zipFilePath -DestinationPath $unzipFolderPath
 
 ===============================================================================
 
