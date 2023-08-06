@@ -1,28 +1,13 @@
-# Replace the following variables with your repository information
-$repositoryUrl = "https://github.com/username/repositoryname"
-$branchName = "main" # Replace with the desired branch name
-$filePath = "path/to/your/file" # Replace with the path to the file you want to download
+$gitZipUrl = "https://your_internal_git_repo.com/path/to/your/zipfile.zip"
+$outputFilePath = "C:\path\to\destination\file.zip"
 
-# Create a temporary folder to store the downloaded zip file
-$tempFolder = New-Item -ItemType Directory -Force -Path (Join-Path $env:TEMP "GitRepoDownload")
+# If your repository requires authentication, you can use the following code:
+#$username = "your_username"
+#$password = "your_password"
+#$cred = New-Object System.Management.Automation.PSCredential($username, (ConvertTo-SecureString $password -AsPlainText -Force))
+#Invoke-WebRequest -Uri $gitZipUrl -Credential $cred -OutFile $outputFilePath
 
-# Compose the zip file download URL
-$zipFileUrl = "$repositoryUrl/archive/$branchName.zip"
+# If your repository does not require authentication, use the following code:
+Invoke-WebRequest -Uri $gitZipUrl -OutFile $outputFilePath
 
-# Download the zip file
-$zipFilePath = Join-Path $tempFolder "repo.zip"
-Invoke-WebRequest -Uri $zipFileUrl -OutFile $zipFilePath
-
-# Extract the file from the zip archive (optional)
-Expand-Archive -Path $zipFilePath -DestinationPath $tempFolder
-
-# Use the $tempFolder to access the downloaded files
-
-# Alternatively, if you only need to extract a specific file from the zip archive, you can use the following:
-# Expand-Archive -Path $zipFilePath -DestinationPath $tempFolder -Force
-# $fileToExtract = Join-Path $tempFolder "repositoryname-$branchName\$filePath"
-# Move-Item -Path $fileToExtract -Destination $tempFolder
-
-# Clean up - remove the temporary folder and zip file
-Remove-Item -Path $zipFilePath -Force
-Remove-Item -Path $tempFolder -Recurse -Force
+Write-Host "ZIP file downloaded successfully!"
