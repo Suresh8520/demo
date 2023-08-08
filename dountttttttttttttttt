@@ -1,7 +1,7 @@
-# Set the URL of the ZIP archive
+# Define the URL of the ZIP archive
 $zipUrl = "https://github.source.internal.cba/ss99/powersell/archive/refs/heads/main.zip"
 
-# Set the destination directory where you want to clone the repository
+# Define the destination directory where you want to save the downloaded ZIP file
 $destinationDir = "C:\path\to\destination\directory"
 
 # Create the destination directory if it doesn't exist
@@ -9,15 +9,13 @@ if (-not (Test-Path -Path $destinationDir)) {
     New-Item -Path $destinationDir -ItemType Directory
 }
 
-# Download and extract the ZIP archive
+# Download the ZIP archive using Invoke-WebRequest
 $zipFilePath = Join-Path -Path $destinationDir -ChildPath "repository.zip"
 Invoke-WebRequest -Uri $zipUrl -OutFile $zipFilePath
-Expand-Archive -Path $zipFilePath -DestinationPath $destinationDir -Force
 
-# Remove the downloaded ZIP file
-Remove-Item -Path $zipFilePath
+# Extract the contents of the ZIP archive
+$extractedDir = Join-Path -Path $destinationDir -ChildPath "repository"
+Expand-Archive -Path $zipFilePath -DestinationPath $extractedDir -Force
 
-# Rename the extracted folder to match the repository name
-$repositoryName = "powersell-main" # You may need to adjust this based on the extracted folder's name
-$extractedPath = Join-Path -Path $destinationDir -ChildPath ($repositoryName + "_temp")
-Rename-Item -Path $extractedPath -NewName $repositoryName -Force
+# Clean up by removing the downloaded ZIP file
+Remove-Item -Path $zipFilePath -Force
