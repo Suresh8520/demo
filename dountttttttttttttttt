@@ -1,13 +1,23 @@
-$gitZipUrl = "https://your_internal_git_repo.com/path/to/your/zipfile.zip"
-$outputFilePath = "C:\path\to\destination\file.zip"
+# Set the URL of the ZIP archive
+$zipUrl = "https://github.source.internal.cba/ss99/powersell/archive/refs/heads/main.zip"
 
-# If your repository requires authentication, you can use the following code:
-#$username = "your_username"
-#$password = "your_password"
-#$cred = New-Object System.Management.Automation.PSCredential($username, (ConvertTo-SecureString $password -AsPlainText -Force))
-#Invoke-WebRequest -Uri $gitZipUrl -Credential $cred -OutFile $outputFilePath
+# Set the destination directory where you want to clone the repository
+$destinationDir = "C:\path\to\destination\directory"
 
-# If your repository does not require authentication, use the following code:
-Invoke-WebRequest -Uri $gitZipUrl -OutFile $outputFilePath
+# Create the destination directory if it doesn't exist
+if (-not (Test-Path -Path $destinationDir)) {
+    New-Item -Path $destinationDir -ItemType Directory
+}
 
-Write-Host "ZIP file downloaded successfully!"
+# Download and extract the ZIP archive
+$zipFilePath = Join-Path -Path $destinationDir -ChildPath "repository.zip"
+Invoke-WebRequest -Uri $zipUrl -OutFile $zipFilePath
+Expand-Archive -Path $zipFilePath -DestinationPath $destinationDir -Force
+
+# Remove the downloaded ZIP file
+Remove-Item -Path $zipFilePath
+
+# Rename the extracted folder to match the repository name
+$repositoryName = "powersell-main" # You may need to adjust this based on the extracted folder's name
+$extractedPath = Join-Path -Path $destinationDir -ChildPath ($repositoryName + "_temp")
+Rename-Item -Path $extractedPath -NewName $repositoryName -Force
