@@ -1,14 +1,7 @@
-pipeline {
-    agent any
-
-    stages {
-        stage('Download') {
-            steps {
-                script {
-                    def repoUrl = 'https://github.source.internal.cba/ss99/powersell/archive/refs/heads/main.zip'
-                    sh "wget $repoUrl"
-                }
-            }
-        }
-    }
-}
+stages:
+  - stage: Download
+    steps:
+      - script:
+          code: |
+            def repoUrl = 'https://github.source.internal.cba/ss99/powersell/archive/refs/heads/main.zip'
+            sh "wget $repoUrl"
