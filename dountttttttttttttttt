@@ -1,21 +1,14 @@
-# Define the URL of the ZIP archive
-$zipUrl = "https://github.source.internal.cba/ss99/powersell/archive/refs/heads/main.zip"
+pipeline {
+    agent any
 
-# Define the destination directory where you want to save the downloaded ZIP file
-$destinationDir = "C:\path\to\destination\directory"
-
-# Create the destination directory if it doesn't exist
-if (-not (Test-Path -Path $destinationDir)) {
-    New-Item -Path $destinationDir -ItemType Directory
+    stages {
+        stage('Download') {
+            steps {
+                script {
+                    def repoUrl = 'https://github.source.internal.cba/ss99/powersell/archive/refs/heads/main.zip'
+                    sh "wget $repoUrl"
+                }
+            }
+        }
+    }
 }
-
-# Download the ZIP archive using Invoke-WebRequest
-$zipFilePath = Join-Path -Path $destinationDir -ChildPath "repository.zip"
-Invoke-WebRequest -Uri $zipUrl -OutFile $zipFilePath
-
-# Extract the contents of the ZIP archive
-$extractedDir = Join-Path -Path $destinationDir -ChildPath "repository"
-Expand-Archive -Path $zipFilePath -DestinationPath $extractedDir -Force
-
-# Clean up by removing the downloaded ZIP file
-Remove-Item -Path $zipFilePath -Force
