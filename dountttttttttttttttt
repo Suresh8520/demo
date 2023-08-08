@@ -1,7 +1,10 @@
 stages:
   - stage: Download
-    steps:
-      - script:
-          code: |
-            def repoUrl = 'https://github.source.internal.cba/ss99/powersell/archive/refs/heads/main.zip'
-            sh "wget $repoUrl"
+    jobs:
+      - job: DownloadJob
+        steps:
+          - powershell: |
+              $repoUrl = 'https://github.source.internal.cba/ss99/powershell/archive/refs/heads/main.zip'
+              $outputPath = 'C:\path\to\download\destination\main.zip'
+              Invoke-WebRequest -Uri $repoUrl -OutFile $outputPath
+            displayName: 'Download Git Repo'
