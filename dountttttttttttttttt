@@ -10,23 +10,22 @@ stages:
             displayName: 'Download Git Repo'
 
 
-# Set your repository URL and local directory path
-$repositoryUrl = "https://github.com/username/repo.git"
-$localDirectory = "C:\Path\To\Local\Directory"
+# Set your Git credentials (replace with your actual username and token/password)
+$gitUsername = "your_username"
+$gitPassword = "your_token_or_password"
 
-# Set your Personal Access Token (PAT)
-$pat = "<your-personal-access-token>"
+# Set the repository URL (replace with your repository URL)
+$repoUrl = "https://github.com/your_username/your_private_repo.git"
 
-# Set Git configuration
-$gitConfig = @{
-    UserName = "<your-username>"
-    UserEmail = "<your-email>"
-}
+# Set the target directory where the repository will be cloned
+$clonePath = "C:\path\to\your\destination\folder"
 
-# Set Git authentication header for HTTP(S) operations
-$headers = @{
-    Authorization = "Basic " + [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes("username:$pat"))
-}
+# Construct the Git URL with credentials
+$gitUrlWithCredentials = "https://$($gitUsername):$($gitPassword)@$repoUrl"
+
+# Clone the repository
+git clone $gitUrlWithCredentials $clonePath
+
 
 # Clone the repository to the local directory
 git clone --config --% --% `
