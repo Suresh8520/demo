@@ -26,11 +26,3 @@ $gitUrlWithCredentials = "https://$($gitUsername):$($gitPassword)@$repoUrl"
 # Clone the repository
 git clone $gitUrlWithCredentials $clonePath
 
-
-# Clone the repository to the local directory
-git clone --config --% --% `
-    --config user.name=$gitConfig.UserName `
-    --config user.email=$gitConfig.UserEmail `
-    --config http.extraheader="AUTHORIZATION: ${headers.Authorization}" `
-    $repositoryUrl $localDirectory
-
