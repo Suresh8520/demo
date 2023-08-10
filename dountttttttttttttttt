@@ -8,3 +8,30 @@ stages:
               $outputPath = 'C:\path\to\download\destination\main.zip'
               Invoke-WebRequest -Uri $repoUrl -OutFile $outputPath
             displayName: 'Download Git Repo'
+
+
+# Set your repository URL and local directory path
+$repositoryUrl = "https://github.com/username/repo.git"
+$localDirectory = "C:\Path\To\Local\Directory"
+
+# Set your Personal Access Token (PAT)
+$pat = "<your-personal-access-token>"
+
+# Set Git configuration
+$gitConfig = @{
+    UserName = "<your-username>"
+    UserEmail = "<your-email>"
+}
+
+# Set Git authentication header for HTTP(S) operations
+$headers = @{
+    Authorization = "Basic " + [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes("username:$pat"))
+}
+
+# Clone the repository to the local directory
+git clone --config --% --% `
+    --config user.name=$gitConfig.UserName `
+    --config user.email=$gitConfig.UserEmail `
+    --config http.extraheader="AUTHORIZATION: ${headers.Authorization}" `
+    $repositoryUrl $localDirectory
+
