@@ -10,20 +10,5 @@ stages:
             displayName: 'Download Git Repo'
 
 
-# Specify the repository URL and the desired branch or release
-$repoUrl = "https://github.com/Suresh8520/my-app/archive/refs/heads/master.zip"
-
-# Specify the local path where the ZIP file will be saved
-$zipFilePath = "C:\path\repo.zip"
-
-# Create a WebClient object
-$webClient = New-Object System.Net.WebClient
-
-# Download the ZIP file
-$webClient.DownloadFile($repoUrl, $zipFilePath)
-
-# Dispose of the WebClient object
-$webClient.Dispose()
-
-Write-Host "ZIP file downloaded to $zipFilePath"
-
+# Download the ZIP file using Invoke-WebRequest
+Invoke-WebRequest -Uri $repoUrl -OutFile $zipFilePath
