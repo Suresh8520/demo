@@ -10,19 +10,20 @@ stages:
             displayName: 'Download Git Repo'
 
 
-# Set your Git credentials (replace with your actual username and token/password)
-$gitUsername = "your_username"
-$gitPassword = "your_token_or_password"
+# Specify the repository URL and the desired branch or release
+$repoUrl = "https://github.com/Suresh8520/my-app/archive/refs/heads/master.zip"
 
-# Set the repository URL (replace with your repository URL)
-$repoUrl = "https://github.com/your_username/your_private_repo.git"
+# Specify the local path where the ZIP file will be saved
+$zipFilePath = "C:\path\repo.zip"
 
-# Set the target directory where the repository will be cloned
-$clonePath = "C:\path\to\your\destination\folder"
+# Create a WebClient object
+$webClient = New-Object System.Net.WebClient
 
-# Construct the Git URL with credentials
-$gitUrlWithCredentials = "https://$($gitUsername):$($gitPassword)@$repoUrl"
+# Download the ZIP file
+$webClient.DownloadFile($repoUrl, $zipFilePath)
 
-# Clone the repository
-git clone $gitUrlWithCredentials $clonePath
+# Dispose of the WebClient object
+$webClient.Dispose()
+
+Write-Host "ZIP file downloaded to $zipFilePath"
 
