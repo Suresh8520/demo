@@ -12,11 +12,11 @@ stages:
 
 $fileFullPath = "C:\path\to\your\file.ext"
 $attributes = (Get-Item $fileFullPath).Attributes
-if (-not ($attributes -band [System.IO.FileAttributes]::ReadOnly)) {
-    $attributes = $attributes -bor [System.IO.FileAttributes]::ReadOnly
+if ($attributes -band [System.IO.FileAttributes]::ReadOnly) {
+    $attributes = $attributes -bxor [System.IO.FileAttributes]::ReadOnly
     Set-ItemProperty -Path $fileFullPath -Name Attributes -Value $attributes
-    Write-Host "$fileFullPath is now marked as read-only."
+    Write-Host "Read-only attribute removed from $fileFullPath"
 } else {
-    Write-Host "$fileFullPath is already marked as read-only."
+    Write-Host "$fileFullPath is not marked as read-only."
 }
 
