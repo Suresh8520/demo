@@ -10,13 +10,32 @@ stages:
             displayName: 'Download Git Repo'
 
 
-$fileFullPath = "C:\path\to\your\file.ext"
-$attributes = (Get-Item $fileFullPath).Attributes
-if ($attributes -band [System.IO.FileAttributes]::ReadOnly) {
-    $attributes = $attributes -bxor [System.IO.FileAttributes]::ReadOnly
-    Set-ItemProperty -Path $fileFullPath -Name Attributes -Value $attributes
-    Write-Host "Read-only attribute removed from $fileFullPath"
-} else {
-    Write-Host "$fileFullPath is not marked as read-only."
-}
-}
+AWSTemplateFormatVersion: '2010-09-09'
+Description: CloudFormation template for setting up Windows instance with Git and Artifactory
+
+Parameters:
+  GitRepoURL:
+    Type: String
+    Description: URL of the Git repository
+  ArtifactoryURL:
+    Type: String
+    Description: URL of Artifactory repository
+  GitUsername:
+    Type: String
+    Description: Git username
+  GitPassword:
+    Type: String
+    Description: Git password
+
+    <powershell>
+    # Install Git
+    Install-PackageProvider -Name NuGet -Force -Scope CurrentUser
+    Install-Module posh-git -Scope CurrentUser -Force
+    Install-Git -Scope CurrentUser
+
+    # Clone Git repository
+    $repoURL = "${GitRepoURL}"
+    $gitUsername = "${GitUsername}"
+    $gitPassword = "${GitPassword}"
+    git clone $repoURL -c "http.extraheader=Authorization: Basic $( [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes("$($gitUsername):$($gitPassword)")))"
+    </powershell>
