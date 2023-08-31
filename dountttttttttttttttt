@@ -1,50 +1,19 @@
-stages:
-  - stage: Download
-    jobs:
-      - job: DownloadJob
-        steps:
-          - powershell: |
-              $repoUrl = 'https://github.source.internal.cba/ss99/powershell/archive/refs/heads/main.zip'
-              $outputPath = 'C:\path\to\download\destination\main.zip'
-              Invoke-WebRequest -Uri $repoUrl -OutFile $outputPath
-            displayName: 'Download Git Repo'
+# Server information
+$serverA = "ServerA"
+$serverB = "ServerB"
 
+# Path to the executable on Server A
+$exePath = "\\$serverA\Share\YourExecutable.exe"
 
-AWSTemplateFormatVersion: '2010-09-09'
-Description: CloudFormation template for setting up Windows instance with Git and Artifactory
+# Command to run the executable on Server B
+$remoteCommand = {
+    param($exePath)
+    # Run the executable on Server B
+    Start-Process -FilePath $exePath -ArgumentList "/disable"
+}
 
-Parameters:
-  GitRepoURL:
-    Type: String
-    Description: URL of the Git repository
-  ArtifactoryURL:
-    Type: String
-    Description: URL of Artifactory repository
-  GitUsername:
-    Type: String
-    Description: Git username
-  GitPassword:
-    Type: String
-    Description: Git password
+# Copy the executable to Server A's shared folder
+Copy-Item -Path "C:\Path\To\YourExecutable.exe" -Destination "\\$serverA\Share" -Force
 
-    <powershell>
-    # Install Git
-    Install-PackageProvider -Name NuGet -Force -Scope CurrentUser
-    Install-Module posh-git -Scope CurrentUser -Force
-    Install-Git -Scope CurrentUser
-
-    # Clone Git repository
-    $repoURL = "${GitRepoURL}"
-    $gitUsername = "${GitUsername}"
-    $gitPassword = "${GitPassword}"
-    git clone $repoURL -c "http.extraheader=Authorization: Basic $( [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes("$($gitUsername):$($gitPassword)")))"
-    </powershell>
-
-$Username = "YourUsername"
-$Password = ConvertTo-SecureString "YourPassword" -AsPlainText -Force
-$Credential = New-Object System.Management.Automation.PSCredential($Username, $Password)
-
-Start-Process -FilePath "path\to\file1.exe" -Credential $Credential -Wait
-Start-Process -FilePath "path\to\file2.exe" -Credential $Credential -Wait
-Start-Process -FilePath "path\to\file3.exe" -Credential $Credential -Wait
-
+# Run the command on Server B through Server A
+Invoke-Command -ComputerName $serverB -ScriptBlock $remoteCommand -ArgumentList $exePath
