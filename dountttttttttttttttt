@@ -17,3 +17,35 @@ Copy-Item -Path "C:\Path\To\YourExecutable.exe" -Destination "\\$serverA\Share" 
 
 # Run the command on Server B through Server A
 Invoke-Command -ComputerName $serverB -ScriptBlock $remoteCommand -ArgumentList $exePath
+
+==============================================================================================
+
+# Configuration
+$sourceServer = "Server1"   # Replace with the name of the source server
+$targetServer = "Server2"   # Replace with the name of the target server
+$xmlFilePath = "C:\Path\To\Your\File.xml"  # Replace with the actual path to your XML file
+
+# Run XML file on the source server
+Invoke-Command -ComputerName $sourceServer -ScriptBlock {
+    param($xmlPath)
+    # Replace with the command you use to run the XML file
+    # For example:
+    # Start-Process "C:\Path\To\Executable.exe" -ArgumentList "/xmlFile=$xmlPath"
+} -ArgumentList $xmlFilePath
+
+# Disable task on the target server
+Invoke-Command -ComputerName $targetServer -ScriptBlock {
+    # Replace "YourTaskName" with the name of the task you want to disable
+    $taskName = "YourTaskName"
+    
+    # Get the task
+    $task = Get-ScheduledTask -TaskName $taskName
+    
+    if ($task -ne $null) {
+        Disable-ScheduledTask -Task $task -Confirm:$false
+        Write-Host "Task '$taskName' disabled on $env:COMPUTERNAME."
+    } else {
+        Write-Host "Task '$taskName' not found on $env:COMPUTERNAME."
+    }
+}
+
