@@ -77,3 +77,6 @@ $taskAction = New-ScheduledTaskAction -Execute "powershell.exe" -Argument "-File
 $taskTrigger = New-ScheduledTaskTrigger -At $triggerTime
 Register-ScheduledTask -Action $taskAction -Trigger $taskTrigger -TaskName "XMLJobOnServer2" -Description "Run XML job on Server 2"
 
+====================================================================
+$credential = Get-Credential -UserName "username" -Password "password"
+Invoke-Command -FilePath "C:\path\demo.ps1" -ComputerName "ComputerName" -Credential $credential
