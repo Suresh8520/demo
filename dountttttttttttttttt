@@ -49,3 +49,31 @@ Invoke-Command -ComputerName $targetServer -ScriptBlock {
     }
 }
 
+====================================================================================================
+
+# Set the server names
+$server1 = "ServerName1"
+$server2 = "ServerName2"
+
+# Set the condition flag
+$runOnServer1 = $true  # Set this to $false if the condition is not met
+
+# Set the path to the XML job file
+$xmlJobFilePath = "C:\Path\to\your\job.xml"
+
+# Define the trigger time (24-hour format)
+$triggerTime = "23:00"  # Change this to the desired time
+
+# Check the condition and schedule tasks accordingly
+if ($runOnServer1) {
+    # Schedule task on Server 1
+    $taskAction = New-ScheduledTaskAction -Execute "powershell.exe" -Argument "-File '$xmlJobFilePath'"
+    $taskTrigger = New-ScheduledTaskTrigger -At $triggerTime
+    Register-ScheduledTask -Action $taskAction -Trigger $taskTrigger -TaskName "XMLJobOnServer1" -Description "Run XML job on Server 1"
+}
+
+# Always schedule the task on Server 2
+$taskAction = New-ScheduledTaskAction -Execute "powershell.exe" -Argument "-File '$xmlJobFilePath'"
+$taskTrigger = New-ScheduledTaskTrigger -At $triggerTime
+Register-ScheduledTask -Action $taskAction -Trigger $taskTrigger -TaskName "XMLJobOnServer2" -Description "Run XML job on Server 2"
+
