@@ -78,5 +78,33 @@ $taskTrigger = New-ScheduledTaskTrigger -At $triggerTime
 Register-ScheduledTask -Action $taskAction -Trigger $taskTrigger -TaskName "XMLJobOnServer2" -Description "Run XML job on Server 2"
 
 ====================================================================
-$credential = Get-Credential -UserName "username" -Password "password"
-Invoke-Command -FilePath "C:\path\demo.ps1" -ComputerName "ComputerName" -Credential $credential
+# Set your AWS credentials and region
+Set-AWSCredentials -AccessKey 'YOUR_ACCESS_KEY' -SecretKey 'YOUR_SECRET_KEY' -StoreAs 'MyCredentials'
+Set-DefaultAWSRegion -Region 'us-east-1'  # Change to your desired region
+
+# Define the EC2 instance IDs for the two instances you want to control
+$Instance1Id = 'i-XXXXXXXXXXXXX'  # Replace with the actual instance ID
+$Instance2Id = 'i-YYYYYYYYYYYYY'  # Replace with the actual instance ID
+
+# Define the command to run on the instances
+$CommandToRun = 'C:\path\to\your\executable.exe -xmlJobFile C:\path\to\your\job.xml'
+
+# Define the schedule (UTC time)
+$StartTime = Get-Date '2023-09-01 08:00:00'
+$EndTime = Get-Date '2023-09-01 20:00:00'
+
+# Check if the current time is within the specified schedule
+$CurrentTime = Get-Date
+if ($CurrentTime -ge $StartTime -and $CurrentTime -le $EndTime) {
+    # If the current time is within the schedule, enable the first instance and run the command
+    Start-EC2Instance -InstanceId $Instance1Id
+    Invoke-Command -Instance $Instance1Id -ScriptBlock { param($command) Invoke-Expression $command } -ArgumentList $CommandToRun
+}
+else {
+    # If the current time is outside the schedule, disable the first instance
+    Stop-EC2Instance -InstanceId $Instance1Id
+}
+
+# Disable the second instance to prevent it from running the job
+Stop-EC2Instance -InstanceId $Instance2Id
+
