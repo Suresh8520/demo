@@ -107,4 +107,17 @@ else {
 
 # Disable the second instance to prevent it from running the job
 Stop-EC2Instance -InstanceId $Instance2Id
+===========================================================================
+# Define the JDK path (adjust this to your JDK installation path)
+$jdkPath = "C:\Program Files\Java\jdk1.8.0_291"
+
+# Set the environment variable
+[System.Environment]::SetEnvironmentVariable("PATH", "$($env:PATH);$jdkPath\bin", [System.EnvironmentVariableTarget]::Machine)
+
+# Refresh the environment so that changes take effect
+[Environment]::SetEnvironmentVariable("PATH", [System.Environment]::GetEnvironmentVariable("PATH", [System.EnvironmentVariableTarget]::Machine), [System.EnvironmentVariableTarget]::Process)
+
+# Verify that the variable has been set
+$env:PATH
+
 
