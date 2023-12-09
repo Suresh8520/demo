@@ -1,4 +1,4 @@
-
+https://www.driverguide.com/driver/detail.php?driverid=2037356&auth=At82snaUidNtrCvtF7wFYmllar0f3%2BrewfY6ssl80ATg6wQmeCxlnt%2F2qCsZvBmmlgnFuDPxPJY47HOeFZAFLRNbO5gQIyvwBjevYpxJ1A1kC%2FQJJkvMGLSjfoISw0gk&frmist=1
 https://www.jenkins.io/doc/book/installing/linux/
 
 Api server - to communicate with kubectl command line it is front end
