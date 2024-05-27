@@ -5,6 +5,20 @@ https://github.com/jaiswaladi246/10-MicroService-Appliction/blob/latest/deployme
 https://www.driverguide.com/driver/detail.php?driverid=2037356&auth=At82snaUidNtrCvtF7wFYmllar0f3%2BrewfY6ssl80ATg6wQmeCxlnt%2F2qCsZvBmmlgnFuDPxPJY47HOeFZAFLRNbO5gQIyvwBjevYpxJ1A1kC%2FQJJkvMGLSjfoISw0gk&frmist=1
 https://www.jenkins.io/doc/book/installing/linux/
 
+amazon-linux-extras install epel -y
+yum update -y
+wget -O /etc/yum.repos.d/jenkins.repo http://pkg.jenkins.io/redhat-stable/jenkins.repo
+rpm --import http://pkg.jenkins.io/redhat-stable/jenkins.io.key
+amazon-linux-extras install java-openjdk11
+yum install jenkins -y
+systemctl start jenkins
+
+service jenkins stop
+yum remove jenkins
+sudo yum remove java-11-openjdk-devel
+sudo yum remove java-11-openjdk
+
+
 Api server - to communicate with kubectl command line it is front end
 Controller manger - kubelet to creating the pod how much pod in running and creating
 Scheduler - scheduler the pods activity
